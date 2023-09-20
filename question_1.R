@@ -24,10 +24,10 @@ n <- c(1 : 10000)
 
 
 # creating collatz data frame --------------------------------------------------
+# sapply function cited from 
+#https://www.geeksforgeeks.org/apply-lapply-sapply-and-tapply-in-r/
 
 collatz_df <- data.frame(
   start = n,
-  seq = list(gen_collatz(n))
+  seq = sapply(n, gen_collatz)
 )
-
-
