@@ -27,7 +27,10 @@ n <- c(1 : 10000)
 # sapply function cited from 
 #https://www.geeksforgeeks.org/apply-lapply-sapply-and-tapply-in-r/
 
-collatz_df <- data.frame(
+collatz_df <- tibble(data.frame(
   start = n,
   seq = sapply(n, gen_collatz)
+ )
 )
+
+collatz_df
