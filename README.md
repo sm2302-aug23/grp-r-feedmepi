@@ -1,9 +1,33 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/HUOoSZXh)
-# Assignment 1 (R group)
+library(tidyverse)
+library(tinytex)
+library(rmarkdown)
+library(palmerpenguins)
+library(dplyr)
+library(tibble)
 
-> Analysis of the Collatz Conjecture
 
-- [Assignment questions](ASSIGNMENT.md) 
-- Please also read [`INSTRUCTIONS.md`](INSTRUCTIONS.md) for specific
-submission instructions and marking rubric.
+# using if, else if and stop statements from lecture 1 -------------------------
+
+gen_collatz <- function(n) {
+  if (n > 0 && n %% 2 == 0) {
+    n / 2
+  } else if (n > 0 && n %% 2 != 0) {
+    3 * n + 1
+  } else if (n < 0) {
+    stop ("Input is negative")
+  }
+}
+
+# assigning integer 1 to 10000 into function(n) --------------------------------
+
+n <- c(1 : 10000)
+
+
+# creating collatz data frame --------------------------------------------------
+
+collatz_df <- data.frame(
+  start = n,
+  seq = list(gen_collatz(n))
+)
+
 
