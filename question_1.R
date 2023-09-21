@@ -83,4 +83,21 @@ gen_collatz(-1)
 gen_collatz(-2)
 
 
+# apply function to all integers from 1 to 10000
+# cited from 
+# https://www.dataquest.io/blog/apply-functions-in-r-sapply-lapply-tapply/
+
+n <- c(1:10000)
+
+result_n <- lapply(n, gen_collatz) 
+
+
+# create collatz data frame
+
+collatz_df <- tibble(
+  start = n,
+  seq = result_n
+)
+
+collatz_df
 
