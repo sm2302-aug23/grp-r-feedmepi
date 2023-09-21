@@ -61,7 +61,7 @@ gen_collatz(10)
 
 gen_collatz <- function(n) {
   if (n < 1) {
-    stop("Input n must be a positive integer!")
+    stop("Input n is invalid!")
   }
   gen <- function(n) {
     if (n %% 2 == 0){
@@ -81,4 +81,6 @@ gen_collatz <- function(n) {
 
 gen_collatz(-1)
 gen_collatz(-2)
+
+
 
