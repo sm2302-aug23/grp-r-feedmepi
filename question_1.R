@@ -56,3 +56,29 @@ gen_collatz <- function(n) {
 gen_collatz(1)
 gen_collatz(5)
 gen_collatz(10)
+
+# add safeguard
+
+gen_collatz <- function(n) {
+  if (n < 1) {
+    stop("Input n must be a positive integer!")
+  }
+  gen <- function(n) {
+    if (n %% 2 == 0){
+      return(n/2)
+    } else (n %% 2 != 0) 
+    return(3 * n + 1)
+  }
+  
+  n_seq <- n
+  while (n != 1) {
+    n <- gen(n)
+    n_seq <- c(n_seq, n)
+  }
+  return(n_seq) 
+}
+
+
+gen_collatz(-1)
+gen_collatz(-2)
+
