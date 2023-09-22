@@ -1,6 +1,10 @@
-collatz_df
+library(tidyverse)
+
 
 #testing out for loops that satisfies backtracking conditions
+#cited from
+#https://www.programiz.com/r/break-next
+
 for (i in 2:length(n_seq)) {
   index <- n_seq[i]
   if (n_seq[1] > index){
@@ -59,21 +63,26 @@ gen_collatz(9)
 gen_collatz(4)
 gen_collatz(1)
 
-###
+#creating the tibble
 n <- c(2:10000)
-result_n <- lapply(n, gen_collatz)
+result_back <- lapply(n, gen_collatz)
 
-View(result_n)
+View(result_back)
 
-collatz_df <- tibble(
+back_df <- tibble(
   start = n,
-  seq = result_n
+  seq = result_back
 )
 
-view(collatz_df)
+view(back_df)
 
-###
+#filtering the collatz_df
 
+backtracks_df <- back_df %>%
+  filter(seq != "NULL") %>%
+  select(start)
+
+view(backtracks_df)
 
 um <- collatz_df %>%
   unnest(seq) 
