@@ -47,7 +47,7 @@ gen_collatz <- function(n) {
   for (j in no:length(n_seq)){
     index2 <- n_seq[j]
     if(n_seq[1] < index2){
-      print(n_seq)
+      return(n_seq)
       break
     }
   }
@@ -64,6 +64,15 @@ n <- c(2:10000)
 result_n <- lapply(n, gen_collatz)
 
 View(result_n)
+
+collatz_df <- tibble(
+  start = n,
+  seq = result_n
+)
+
+view(collatz_df)
+
+###
 
 
 um <- collatz_df %>%
