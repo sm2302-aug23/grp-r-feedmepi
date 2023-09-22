@@ -98,7 +98,7 @@ above
 #obtaining the frequency of the sequences going above starting integer
 #cited from https://sparkbyexamples.com/r-programming/r-count-frequency-of-all-unique-values-in-vector/#:~:text=There%20are%20multiple%20ways%20to,package%2C%20or%20aggregate()%20function.
 
-freq <- as.data.frame(table(above$start))
+start_freq <- as.data.frame(table(above$start))
 
 #finding mode of the frequency
 #cited from https://www.tutorialspoint.com/how-to-find-mode-for-an-r-data-frame-column
@@ -107,13 +107,13 @@ mode <- function(x){
   which.max(tabulate(x))
 }
 
-mode_backtrack <- mode(freq$Freq)
+mode_backtrack <- mode(start_freq$Freq)
 
 mode_backtrack
 
 ##3
 #filtering to obtain sequences that has backtracked only once
-one <- freq %>% 
+one <- start_freq %>% 
   filter(Freq == 1) %>%
   select(Var1)
 
@@ -137,6 +137,8 @@ oven <- back_df %>%
   filter(seq != "NULL") %>%
   mutate(evenodd = case_when(start %% 2 == 0 ~ 'even',
                              start %% 2 != 0 ~ 'odd'))
+
+oven
 
 #creating a frequency table
 
