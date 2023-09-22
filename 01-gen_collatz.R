@@ -23,9 +23,6 @@ gen_collatz <- function(n) {
   return(n_seq) 
 }
 
-gen_collatz(1)
-gen_collatz(5)
-gen_collatz(10)
 
 # add safeguard
 
@@ -49,8 +46,6 @@ gen_collatz <- function(n) {
 }
 
 
-gen_collatz(-1)
-gen_collatz(-2)
 
 
 # apply function to all integers from 1 to 10000
