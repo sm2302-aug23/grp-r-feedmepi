@@ -38,9 +38,13 @@ gen_collatz <- function(n) {
   }
   
   n_seq <- n
-  while (n != 1) {
-    n <- gen(n)
-    n_seq <- c(n_seq, n)
+  if (n == 1) {
+    n_seq <- c(1)
+  } else {
+    while (n != 1) {
+      n <- gen(n)
+      n_seq <- c(n_seq, n)
+    }
   }
   return(n_seq) 
 }
