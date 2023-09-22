@@ -129,25 +129,23 @@ max_after_backtrack <- above %>%
 max_after_backtrack
 
 ##4
+#identify if starting integer is odd or even by mutate
+#inspired from
+#https://stackoverflow.com/questions/22337394/dplyr-mutate-with-conditional-values
 
-as.vector(one)
+oven <- back_df %>%
+  filter(seq != "NULL") %>%
+  mutate(evenodd = case_when(start %% 2 == 0 ~ 'even',
+                             start %% 2 != 0 ~ 'odd'))
 
-above$start[as.vector(one)]
+#creating a frequency table
 
+even_odd_backtrack <- as.data.frame(table(oven$evenodd))
 
-um <- collatz_df %>%
-  unnest(seq) 
-
-um2 <- um %>% 
-  filter(seq > start) %>%
-
-  uniq
-uni <- unique(um2$start)
-
-above <- collatz_df[collatz_df$start %in% c(uni), ]
+even_odd_backtrack
 
 
-unstack(rev(um))
+
 
 
 
