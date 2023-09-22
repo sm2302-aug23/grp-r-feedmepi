@@ -5,11 +5,6 @@ library(palmerpenguins)
 library(dplyr)
 library(tibble)
 
-# due to conflicted package, I ran the code to force all conflicts to become errors
-install.packages("devtools")
-devtools::install_github("r-lib/conflicted", force = TRUE)
-# ✖ dplyr::filter() masks stats::filter()
-# ✖ dplyr::lag()    masks stats::lag()
 
 ### 2) Exploratory data analysis
 
@@ -33,7 +28,7 @@ top10longest <- gen_collatz %>%
 
 max_Val_int <- gen_collatz %>%
                 select(gen_collatz$start & gen_collatz$max_val) %>%
-                arrange(desc(gen_collatz$max_val))
+                arrange(desc(gen_collatz$max_val)) %>%
 
 
 #3.  What is the average length and standard deviation of the sequence
