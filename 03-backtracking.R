@@ -111,8 +111,28 @@ mode_backtrack <- mode(freq$Freq)
 
 mode_backtrack
 
+##3
+#filtering to obtain sequences that has backtracked only once
+one <- freq %>% 
+  filter(Freq == 1) %>%
+  select(Var1)
 
+one
 
+#filtering the 'above' that contains the starting integers that backtrack once
+#so that we get the max value reached
+
+max_after_backtrack <- above %>%
+  filter(start %in% one$Var1) %>%
+  select(seq)
+
+max_after_backtrack
+
+##4
+
+as.vector(one)
+
+above$start[as.vector(one)]
 
 
 um <- collatz_df %>%
