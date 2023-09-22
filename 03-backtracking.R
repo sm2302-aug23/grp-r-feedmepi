@@ -1,8 +1,8 @@
 library(tidyverse)
 
-
+##1
 #testing out for loops that satisfies backtracking conditions
-#cited from
+#inspired from
 #https://www.programiz.com/r/break-next
 
 for (i in 2:length(n_seq)) {
@@ -76,13 +76,44 @@ back_df <- tibble(
 
 view(back_df)
 
-#filtering the collatz_df
+#filtering the collatz_df, obtaining bactracks_df
 
 backtracks_df <- back_df %>%
   filter(seq != "NULL") %>%
   select(start)
 
+backtracks_df
 view(backtracks_df)
+
+##2
+#obtaining the instances where the sequence goes above starting integer
+
+above <- back_df %>%
+  filter(seq != "NULL") %>%
+  unnest(seq) %>%
+  filter(seq > start)
+  
+above
+
+#obtaining the frequency of the sequences going above starting integer
+#cited from https://sparkbyexamples.com/r-programming/r-count-frequency-of-all-unique-values-in-vector/#:~:text=There%20are%20multiple%20ways%20to,package%2C%20or%20aggregate()%20function.
+
+freq <- as.data.frame(table(above$start))
+
+#finding mode of the frequency
+#cited from https://www.tutorialspoint.com/how-to-find-mode-for-an-r-data-frame-column
+
+mode <- function(x){
+  which.max(tabulate(x))
+}
+
+mode_backtrack <- mode(freq$Freq)
+
+mode_backtrack
+
+
+
+
 
 um <- collatz_df %>%
   unnest(seq) 
@@ -90,6 +121,7 @@ um <- collatz_df %>%
 um2 <- um %>% 
   filter(seq > start) %>%
 
+  uniq
 uni <- unique(um2$start)
 
 above <- collatz_df[collatz_df$start %in% c(uni), ]
