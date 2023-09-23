@@ -26,28 +26,15 @@ max_Val_int <- collatz_df %>%
                slice(1:1, .by = NULL, .preserve = FALSE) %>%
                select(start)
 
-max_Val_int
-
 #3.  What is the average length and standard deviation of the sequence
 #for even starting integers compared to odd ones?
   
-odd <- collatz_df %>%
-       select(collatz_df$parity) %>%
-       group_by(Odd) %>%
-       print(collatz_df$length(1:n))
+grouped <- collatz_df %>%
+       select(parity & length) %>%
+       group_by(parity) %>%
+       select(length)
 
-mean(odd)  
-sd(odd)
-
-even <- collatz_df %>%
-        select(parity) %>%
-        group_by(Even) %>%
-        print(collatz_df$length)
-
-mean(even)
-sd(even)
-
-even_odd_avg_len <- mean(odd & even)
+even_odd_avg_len <- mean(grouped)
 
 even_odd_sd_len <- sd(odd & even)
   
