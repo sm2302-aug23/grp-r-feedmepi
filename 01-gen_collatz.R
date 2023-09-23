@@ -70,3 +70,18 @@ collatz_df <- tibble(
 
 collatz_df
 
+
+# add additional columns 
+# cited from
+# https://stackoverflow.com/questions/22337394/dplyr-mutate-with-conditional-values
+# https://www.geeksforgeeks.org/apply-lapply-sapply-and-tapply-in-r/
+
+
+
+mutate(.data = collatz_df,
+       length = sapply(seq, length),
+       parity = case_when(length %% 2 == 0 ~ 'Even',
+                          length %% 2 != 0 ~ 'Odd'),
+       max_val = sapply(seq, max)
+       )
+
