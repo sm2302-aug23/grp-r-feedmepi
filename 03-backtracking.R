@@ -1,7 +1,7 @@
 library(tidyverse)
 
 ##1
-#creating a function that returns only the sequences that backtracks
+#creating a function that returns only the whole sequence that backtrack occurs
 #error fixing cited from
 #https://stackoverflow.com/questions/7355187/error-in-if-while-condition-missing-value-where-true-false-needed
 gen_back <- function(n) {
@@ -60,7 +60,7 @@ backtracks_df
 view(backtracks_df)
 
 ##2
-#creating a function that gives only the sequences that backtrack
+#creating a function that returns only the sequences that backtrack
 gen_back_seq <- function(n) {
   if (n < 1) {
     stop("Input n is invalid!")
@@ -195,3 +195,4 @@ even_odd_backtrack <- as.data.frame(table(oven$evenodd))$Freq
 
 even_odd_backtrack
 
+view(collatz_df)
