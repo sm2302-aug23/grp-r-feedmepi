@@ -79,10 +79,17 @@ collatz_df
 
 
 mutate(.data = collatz_df,
-       length = sapply(seq, length),
+       length = as.double(sapply(seq, length)),
        parity = case_when(start %% 2 == 0 ~ 'Even',
                           start %% 2 != 0 ~ 'Odd'),
        max_val = sapply(seq, max)
        )
+
+collatz_df <- mutate(.data = collatz_df,
+                     length = as.double(sapply(seq, length)),
+                     parity = case_when(start %% 2 == 0 ~ 'Even',
+                                        start %% 2 != 0 ~ 'Odd'),
+                     max_val = sapply(seq, max)
+)
 
 
