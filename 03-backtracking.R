@@ -57,7 +57,6 @@ backtracks_df <- back_df %>%
   filter(seq != "NULL")
 
 backtracks_df
-view(backtracks_df)
 
 ##2
 #creating a function that returns only the sequences that backtrack
@@ -128,7 +127,7 @@ mode <- function(x){
 
 mode_backtrack <- mode(start_freq$Freq)
 
-typeof(mode_backtrack)
+mode_backtrack
 
 ##3
 #creating a function that returns maximum value after first backtrack
@@ -194,5 +193,3 @@ oven
 even_odd_backtrack <- as.data.frame(table(oven$evenodd))$Freq
 
 even_odd_backtrack
-
-view(collatz_df)
