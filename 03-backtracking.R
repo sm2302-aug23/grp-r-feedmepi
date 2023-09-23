@@ -54,8 +54,7 @@ view(back_df)
 #filtering the collatz_df, obtaining bactracks_df
 
 backtracks_df <- back_df %>%
-  filter(seq != "NULL") %>%
-  select(start)
+  filter(seq != "NULL")
 
 backtracks_df
 view(backtracks_df)
@@ -129,7 +128,7 @@ mode <- function(x){
 
 mode_backtrack <- mode(start_freq$Freq)
 
-mode_backtrack
+typeof(mode_backtrack)
 
 ##3
 #creating a function that returns maximum value after first backtrack
@@ -171,8 +170,10 @@ back_max_df <- tibble(
 
 view(back_max_df)
 
-max_after_backtrack <- back_max_df %>% 
+back_max <- back_max_df %>% 
   filter(seq != "NULL")
+
+max_after_backtrack <- back_max$seq
 
 max_after_backtrack
 
@@ -190,7 +191,7 @@ oven
 
 #creating a frequency table
 
-even_odd_backtrack <- as.data.frame(table(oven$evenodd))
+even_odd_backtrack <- as.data.frame(table(oven$evenodd))$Freq
 
 even_odd_backtrack
 
