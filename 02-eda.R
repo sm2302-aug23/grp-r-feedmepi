@@ -22,8 +22,8 @@ top10longest <- collatz_df %>%
 #highest maximum value 
 
 max_Val_int <- collatz_df %>%
-               arrange(desc("max_val"), .by_group = TRUE) %>%
-               slice(1:1, .by = NULL, .preserve = TRUE) %>%
+               arrange(desc(max_val), .by_group = TRUE) %>%
+               slice(1:1, .by = NULL, .preserve = FALSE) %>%
                select(start)
 
 max_Val_int
