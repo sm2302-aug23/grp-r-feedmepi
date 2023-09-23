@@ -1,28 +1,8 @@
 library(tidyverse)
 
 ##1
-#testing out for loops that satisfies backtracking conditions
-#inspired from
-#https://www.programiz.com/r/break-next
-
-for (i in 2:length(n_seq)) {
-  index <- n_seq[i]
-  if (n_seq[1] > index){
-    no <- i
-    break
-  }
-} for (j in no:length(n_seq)){
-  index2 <- n_seq[j]
-  if(n_seq[1] < index2){
-    print(n_seq)
-    break
-  }
-}
-
-
-#putting for loop in the function
-
-gen_collatz <- function(n) {
+#creating a function that returns only the sequences that backtracks
+gen_back <- function(n) {
   if (n < 1) {
     stop("Input n is invalid!")
   }
@@ -37,36 +17,28 @@ gen_collatz <- function(n) {
   if (n == 1) {
     n_seq <- c(1)
   } else {
-  while (n != 1) {
-    n <- gen(n)
-    n_seq <- c(n_seq, n)
+    while (n != 1) {
+      n <- gen(n)
+      n_seq <- c(n_seq, n)
+    }
   }
-  }
+  n_seq3 <- c()
   for (i in 2:length(n_seq)) {
-    index <- n_seq[i]
-    if (n_seq[1] > index){
-      no <- i
-      break
+    if (isTRUE(n_seq[1] > n_seq[i] & n_seq[1] < n_seq[i+1]) == TRUE){
+      return(n_seq)
     }
   } 
-  for (j in no:length(n_seq)){
-    index2 <- n_seq[j]
-    if(n_seq[1] < index2){
-      return(n_seq)
-      break
-    }
-  }
 }
 
 #testing out on various n
-gen_collatz(10)
-gen_collatz(9)
-gen_collatz(4)
-gen_collatz(1)
+gen_back(10)
+gen_back(9)
+gen_back(4)
+gen_back(1)
 
 #creating the tibble
-n <- c(2:10000)
-result_back <- lapply(n, gen_collatz)
+n <- c(1:10000)
+result_back <- lapply(n, gen_back)
 
 View(result_back)
 
@@ -87,9 +59,52 @@ backtracks_df
 view(backtracks_df)
 
 ##2
-#obtaining the instances where the sequence goes above starting integer
+#creating a function that gives only the sequences that backtrack
+gen_backseq <- function(n) {
+  if (n < 1) {
+    stop("Input n is invalid!")
+  }
+  gen <- function(n) {
+    if (n %% 2 == 0){
+      return(n/2)
+    } else (n %% 2 != 0) 
+    return(3 * n + 1)
+  }
+  
+  n_seq <- n
+  if (n == 1) {
+    n_seq <- c(1)
+  } else {
+    while (n != 1) {
+      n <- gen(n)
+      n_seq <- c(n_seq, n)
+    }
+  }
+  n_seq3 <- c()
+  for (i in 2:length(n_seq)) {
+    if (isTRUE(n_seq[1] > n_seq[i] & n_seq[1] < n_seq[i+1]) == TRUE){
+      b <- n_seq[i]
+      t <- n_seq[i+1]
+      
+      n_seq2 <- c(b,t)
+      n_seq3 <- c(n_seq3, n_seq2)
+    }
+  } 
+  return(n_seq3)
+}
 
-above <- back_df %>%
+result_backseq <- lapply(n, gen_backseq)
+
+
+backseq_df <- tibble(
+  start = n,
+  seq = result_backseq
+)
+
+view(backseq_df)
+
+
+above <- backseq_df %>%
   filter(seq != "NULL") %>%
   unnest(seq) %>%
   filter(seq > start)
@@ -100,8 +115,9 @@ above
 #cited from https://sparkbyexamples.com/r-programming/r-count-frequency-of-all-unique-values-in-vector/#:~:text=There%20are%20multiple%20ways%20to,package%2C%20or%20aggregate()%20function.
 
 start_freq <- as.data.frame(table(above$start))
+view(start_freq)
 
-#finding mode of the frequency
+#creating mode function and finding mode of the frequency
 #cited from https://www.tutorialspoint.com/how-to-find-mode-for-an-r-data-frame-column
 
 mode <- function(x){
@@ -148,45 +164,4 @@ even_odd_backtrack <- as.data.frame(table(oven$evenodd))
 even_odd_backtrack
 
 
-#test site
 
-gen_collatz <- function(n) {
-  if (n < 1) {
-    stop("Input n is invalid!")
-  }
-  gen <- function(n) {
-    if (n %% 2 == 0){
-      return(n/2)
-    } else (n %% 2 != 0) 
-    return(3 * n + 1)
-  }
-  
-  n_seq <- n
-  if (n == 1) {
-    n_seq <- c(1)
-  } else {
-    while (n != 1) {
-      n <- gen(n)
-      n_seq <- c(n_seq, n)
-    }
-  }
-  n_seq3 <- c()
-  for (i in 2:length(n_seq)) {
-    if (isTRUE(n_seq[1] > n_seq[i] & n_seq[1] < n_seq[i+1]) == TRUE){
-        b <- n_seq[i]
-        t <- n_seq[i+1]
-      
-      n_seq2 <- c(b,t)
-      n_seq3 <- c(n_seq3, n_seq2)
-    }
-  } 
-  return(n_seq3)
-}
-
-gen_collatz(10)
-gen_collatz(6)
-gen_collatz(7)
-gen_collatz(18)
-gen_collatz(34)
-gen_collatz(2)
-gen_collatz(4)
