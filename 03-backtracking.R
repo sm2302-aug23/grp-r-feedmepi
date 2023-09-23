@@ -19,6 +19,7 @@ for (i in 2:length(n_seq)) {
   }
 }
 
+
 #putting for loop in the function
 
 gen_collatz <- function(n) {
@@ -147,7 +148,45 @@ even_odd_backtrack <- as.data.frame(table(oven$evenodd))
 even_odd_backtrack
 
 
+#test site
 
+gen_collatz <- function(n) {
+  if (n < 1) {
+    stop("Input n is invalid!")
+  }
+  gen <- function(n) {
+    if (n %% 2 == 0){
+      return(n/2)
+    } else (n %% 2 != 0) 
+    return(3 * n + 1)
+  }
+  
+  n_seq <- n
+  if (n == 1) {
+    n_seq <- c(1)
+  } else {
+    while (n != 1) {
+      n <- gen(n)
+      n_seq <- c(n_seq, n)
+    }
+  }
+  n_seq3 <- c()
+  for (i in 2:length(n_seq)) {
+    if (isTRUE(n_seq[1] > n_seq[i] & n_seq[1] < n_seq[i+1]) == TRUE){
+        b <- n_seq[i]
+        t <- n_seq[i+1]
+      
+      n_seq2 <- c(b,t)
+      n_seq3 <- c(n_seq3, n_seq2)
+    }
+  } 
+  return(n_seq3)
+}
 
-
-
+gen_collatz(10)
+gen_collatz(6)
+gen_collatz(7)
+gen_collatz(18)
+gen_collatz(34)
+gen_collatz(2)
+gen_collatz(4)
