@@ -22,18 +22,18 @@ top10longest <- collatz_df %>%
 #highest maximum value 
 
 max_Val_int <- collatz_df %>%
-              select(collatz_df$start & collatz_df$max_val) %>%
-              arrange(desc(max_val), .by_group = TRUE) %>%
-              select(collatz_df$start(1:1))
+               select(collatz_df$start & collatz_df$max_val) %>%
+               arrange(desc(max_val), .by_group = TRUE) %>%
+               select(collatz_df$start(1:1))
 
 
 #3.  What is the average length and standard deviation of the sequence
 #for even starting integers compared to odd ones?
   
 odd <- collatz_df %>%
-      select(parity) %>%
-      group_by(Odd) %>%
-      print(collatz_df$length(1:n))
+       select(parity) %>%
+       group_by(Odd) %>%
+       print(collatz_df$length(1:n))
 
 mean(odd)  
 sd(odd)
@@ -50,7 +50,7 @@ even_odd_avg_len <- mean(odd & even)
 
 even_odd_sd_len <- sd(odd & even)
   
-# Using two sample t-test to find out the p-value
+# Using t-test to find out the p-value
   t.test(odd, even, var.eq = FALSE)
 
 # If p-value is less than 0.05, therefore there is an insignificant difference.
