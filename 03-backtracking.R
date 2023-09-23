@@ -194,5 +194,3 @@ even_odd_backtrack <- as.data.frame(table(oven$evenodd))
 
 even_odd_backtrack
 
-
-
