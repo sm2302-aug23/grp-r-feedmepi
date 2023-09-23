@@ -11,10 +11,10 @@ library(tibble)
 #1.  Find the top 10 starting integers that produce the longest sequences
 
 top10longest <- collatz_df %>%
-                arrange(desc("length"), .by_group = TRUE) %>%
-                select(collatz_df$length(1:10) & collatz_df$start(1:10)) %>%
-                print(collatz_df$start(1:10))
-  
+                arrange(desc(length), .by_group = TRUE) %>%
+                slice(1:10, .by =  NULL, .preserve = FALSE) %>%
+                select(start)
+
 # inspired from: 
 # https://statisticsglobe.com/select-top-n-highest-values-by-group-in-r
 
@@ -22,10 +22,11 @@ top10longest <- collatz_df %>%
 #highest maximum value 
 
 max_Val_int <- collatz_df %>%
-               select(collatz_df$start & collatz_df$max_val) %>%
                arrange(desc("max_val"), .by_group = TRUE) %>%
-               select("start"(1:1))
+               slice(1:1, .by = NULL, .preserve = TRUE) %>%
+               select(start)
 
+max_Val_int
 
 #3.  What is the average length and standard deviation of the sequence
 #for even starting integers compared to odd ones?
