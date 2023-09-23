@@ -2,6 +2,8 @@ library(tidyverse)
 
 ##1
 #creating a function that returns only the sequences that backtracks
+#error fixing cited from
+#https://stackoverflow.com/questions/7355187/error-in-if-while-condition-missing-value-where-true-false-needed
 gen_back <- function(n) {
   if (n < 1) {
     stop("Input n is invalid!")
@@ -60,7 +62,7 @@ view(backtracks_df)
 
 ##2
 #creating a function that gives only the sequences that backtrack
-gen_backseq <- function(n) {
+gen_back_seq <- function(n) {
   if (n < 1) {
     stop("Input n is invalid!")
   }
@@ -93,18 +95,19 @@ gen_backseq <- function(n) {
   return(n_seq3)
 }
 
-result_backseq <- lapply(n, gen_backseq)
+#creating the tibble and filtering sequence numbers that are higher than start
+result_back_seq <- lapply(n, gen_back_seq)
 
 
-backseq_df <- tibble(
+back_seq_df <- tibble(
   start = n,
-  seq = result_backseq
+  seq = result_back_seq
 )
 
-view(backseq_df)
+view(back_seq_df)
 
 
-above <- backseq_df %>%
+above <- back_seq_df %>%
   filter(seq != "NULL") %>%
   unnest(seq) %>%
   filter(seq > start)
@@ -129,19 +132,47 @@ mode_backtrack <- mode(start_freq$Freq)
 mode_backtrack
 
 ##3
-#filtering to obtain sequences that has backtracked only once
-one <- start_freq %>% 
-  filter(Freq == 1) %>%
-  select(Var1)
+#creating a function that returns maximum value after first backtrack
+gen_back_max <- function(n) {
+  if (n < 1) {
+    stop("Input n is invalid!")
+  }
+  gen <- function(n) {
+    if (n %% 2 == 0){
+      return(n/2)
+    } else (n %% 2 != 0) 
+    return(3 * n + 1)
+  }
+  
+  n_seq <- n
+  if (n == 1) {
+    n_seq <- c(1)
+  } else {
+    while (n != 1) {
+      n <- gen(n)
+      n_seq <- c(n_seq, n)
+    }
+  }
+  n_seq3 <- c()
+  for (i in 2:length(n_seq)) {
+    if (isTRUE(n_seq[1] > n_seq[i] & n_seq[1] < n_seq[i+1]) == TRUE){
+      return(n_seq[i+1])
+    }
+  } 
+}
 
-one
+#creating tibble of the max values
+result_back_max <- lapply(n, gen_back_max)
 
-#filtering the 'above' that contains the starting integers that backtrack once
-#so that we get the max value reached
+back_max_df <- tibble(
+  start = n,
+  seq = result_back_max
+)
 
-max_after_backtrack <- above %>%
-  filter(start %in% one$Var1) %>%
-  select(seq)
+view(back_max_df)
+
+max_after_backtrack <- back_max_df %>% 
+  filter(seq != "NULL")
 
 max_after_backtrack
 
