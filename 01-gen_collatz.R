@@ -51,6 +51,7 @@ gen_collatz <- function(n) {
   return(n_seq) 
 }
 
+gen_collatz
 
 # apply function to all integers from 1 to 10000
 # cited from 
@@ -66,6 +67,7 @@ collatz_df <- tibble(
   start = n,
   seq = result_n
 )
+
 
 
 # add additional columns 
@@ -89,4 +91,4 @@ collatz_df <- mutate(.data = collatz_df,
                      max_val = sapply(seq, max)
 )
 
-
+collatz_df
