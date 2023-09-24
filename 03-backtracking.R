@@ -146,7 +146,7 @@ gen_back_max <- function(n) {
   n_seq3 <- c()
   for (i in 2:length(n_seq)) {
     if (isTRUE(n_seq[1] > n_seq[i] & n_seq[1] < n_seq[i+1]) == TRUE){
-      return(n_seq[i+1])
+      return(n_seq[-(0:i+1)])
     }
   } 
 }
@@ -160,9 +160,10 @@ back_max_df <- tibble(
 )
 
 back_max <- back_max_df %>% 
-  filter(seq != "NULL")
+  filter(seq != "NULL") %>%
+  mutate(max_after_back = sapply(seq, max))
 
-max_after_backtrack <- unlist(back_max$seq)
+max_after_backtrack <- unlist(back_max$max_after_back)
 
 max_after_backtrack
 
