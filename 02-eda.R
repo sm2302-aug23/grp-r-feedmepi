@@ -14,7 +14,7 @@ top10longest <- collatz_df %>%
                 arrange(desc(length), .by_group = TRUE) %>%
                 slice(1:10, .by =  NULL, .preserve = FALSE) %>%
                 select(start)
-top10longest
+
 # inspired from: 
 # https://statisticsglobe.com/select-top-n-highest-values-by-group-in-r
 
