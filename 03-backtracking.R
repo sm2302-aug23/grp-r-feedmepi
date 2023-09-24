@@ -1,7 +1,7 @@
 library(tidyverse)
 
 ##1
-#creating a function that returns only the start and seq that backtrack occurs
+#creating a function that returns only the start and seq where backtrack occurs
 #error fixing cited from
 #https://stackoverflow.com/questions/7355187/error-in-if-while-condition-missing-value-where-true-false-needed
 
@@ -45,7 +45,12 @@ back_df <- tibble(
 #filtering the collatz_df, obtaining bactracks_df
 
 backtracks_df <- back_df %>%
-  filter(seq != "NULL")
+  filter(seq != "NULL") %>%
+  mutate(length = as.double(sapply(seq, length)),
+         parity = case_when(start %% 2 == 0 ~ 'Even',
+                            start %% 2 != 0 ~ 'Odd'),
+         max_val = sapply(seq, max)
+  )
 
 backtracks_df
 
