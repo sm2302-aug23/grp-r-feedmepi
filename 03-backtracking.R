@@ -33,12 +33,6 @@ gen_back <- function(n) {
   } 
 }
 
-#testing out on various n
-gen_back(10)
-gen_back(9)
-gen_back(4)
-gen_back(1)
-
 #creating the tibble
 n <- c(1:10000)
 result_back <- lapply(n, gen_back)
@@ -90,39 +84,36 @@ gen_back_seq <- function(n) {
   return(n_seq3)
 }
 
-#creating the tibble and filtering sequence numbers that are higher than start
-result_back_seq <- lapply(n, gen_back_seq)
+#creating the tibble and filtering an unnesting sequence numbers 
+#that are higher than start
 
+result_back_seq <- lapply(n, gen_back_seq)
 
 back_seq_df <- tibble(
   start = n,
   seq = result_back_seq
 )
 
-view(back_seq_df)
-
-
 above <- back_seq_df %>%
   filter(seq != "NULL") %>%
   unnest(seq) %>%
   filter(seq > start)
-  
-above
 
 #obtaining the frequency of the sequences going above starting integer
 #cited from https://sparkbyexamples.com/r-programming/r-count-frequency-of-all-unique-values-in-vector/#:~:text=There%20are%20multiple%20ways%20to,package%2C%20or%20aggregate()%20function.
 
 start_freq <- as.data.frame(table(above$start))
-view(start_freq)
 
 #creating mode function and finding mode of the frequency
-#cited from https://www.tutorialspoint.com/how-to-find-mode-for-an-r-data-frame-column
+#cited from https://statisticsglobe.com/mode-in-r-programming-example
 
-mode <- function(x){
-  which.max(tabulate(x))
+my_mode <- function(x) {                      
+  unique_x <- unique(x)
+  tabulate_x <- tabulate(match(x, unique_x))
+  unique_x[tabulate_x == max(tabulate_x)]
 }
 
-mode_backtrack <- mode(start_freq$Freq)
+mode_backtrack <- as.integer(my_mode(start_freq$Freq))
 
 mode_backtrack
 
@@ -164,12 +155,10 @@ back_max_df <- tibble(
   seq = result_back_max
 )
 
-view(back_max_df)
-
 back_max <- back_max_df %>% 
   filter(seq != "NULL")
 
-max_after_backtrack <- back_max$seq
+max_after_backtrack <- as.vector(back_max$seq)
 
 max_after_backtrack
 
@@ -183,10 +172,10 @@ oven <- back_df %>%
   mutate(evenodd = case_when(start %% 2 == 0 ~ 'even',
                              start %% 2 != 0 ~ 'odd'))
 
-oven
-
 #creating a frequency table
 
-even_odd_backtrack <- as.data.frame(table(oven$evenodd))$Freq
+even_odd <- as.data.frame(table(oven$evenodd))$Freq
+
+even_odd_backtrack <- as.vector(even_odd)
 
 even_odd_backtrack
