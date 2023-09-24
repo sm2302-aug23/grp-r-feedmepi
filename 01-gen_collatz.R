@@ -1,3 +1,5 @@
+# load library
+
 library(tidyverse)
 library(tinytex)
 library(rmarkdown)
@@ -5,7 +7,7 @@ library(palmerpenguins)
 library(dplyr)
 library(tibble)
 
-#Aqil draft
+# collatz sequence 
 
 gen_collatz <- function(n) {
   gen <- function(n) {
@@ -50,14 +52,11 @@ gen_collatz <- function(n) {
 }
 
 
-
-
 # apply function to all integers from 1 to 10000
 # cited from 
 # https://www.dataquest.io/blog/apply-functions-in-r-sapply-lapply-tapply/
 
 n <- c(1:10000)
-
 result_n <- lapply(n, gen_collatz) 
 
 
@@ -67,8 +66,6 @@ collatz_df <- tibble(
   start = n,
   seq = result_n
 )
-
-collatz_df
 
 
 # add additional columns 
