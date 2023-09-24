@@ -1,9 +1,10 @@
 library(tidyverse)
 
 ##1
-#creating a function that returns only the whole sequence that backtrack occurs
+#creating a function that returns only the start and seq that backtrack occurs
 #error fixing cited from
 #https://stackoverflow.com/questions/7355187/error-in-if-while-condition-missing-value-where-true-false-needed
+
 gen_back <- function(n) {
   if (n < 1) {
     stop("Input n is invalid!")
@@ -42,14 +43,10 @@ gen_back(1)
 n <- c(1:10000)
 result_back <- lapply(n, gen_back)
 
-View(result_back)
-
 back_df <- tibble(
   start = n,
   seq = result_back
 )
-
-view(back_df)
 
 #filtering the collatz_df, obtaining bactracks_df
 
