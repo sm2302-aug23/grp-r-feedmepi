@@ -14,14 +14,14 @@ top10longest <- collatz_df %>%
                 arrange(desc(length), .by_group = TRUE) %>%
                 slice(1:10, .by =  NULL, .preserve = FALSE) %>%
                 select(start)
-
+top10longest
 # inspired from: 
 # https://statisticsglobe.com/select-top-n-highest-values-by-group-in-r
 
 #2.  Find out which starting integer produces a sequence that reaches the
 #highest maximum value 
 
-max_Val_int <- collatz_df %>%
+max_val_int <- collatz_df %>%
                arrange(desc(max_val), .by_group = TRUE) %>%
                slice(1:1, .by = NULL, .preserve = FALSE) %>%
                select(start)
