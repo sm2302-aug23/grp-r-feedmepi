@@ -53,7 +53,6 @@ backtracks_df <- back_df %>%
   )
 
 backtracks_df
-
 ##2
 #creating a function that returns only the sequences that backtrack
 gen_back_seq <- function(n) {
