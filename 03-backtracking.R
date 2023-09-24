@@ -163,7 +163,7 @@ back_max_df <- tibble(
 back_max <- back_max_df %>% 
   filter(seq != "NULL")
 
-max_after_backtrack <- as.vector(back_max$seq)
+max_after_backtrack <- unlist(back_max$seq)
 
 max_after_backtrack
 
