@@ -33,7 +33,7 @@ gen_back <- function(n) {
   } 
 }
 
-#creating the tibble
+#creating the tibble, filtering out "NULL" and adding more columns
 n <- c(1:10000)
 result_back <- lapply(n, gen_back)
 
@@ -47,9 +47,6 @@ backtracks_df <- tibble(
                             start %% 2 != 0 ~ 'Odd'),
          max_val = sapply(seq, max))
 
-#filtering the back_df, obtaining bactracks_df
-
-backtracks_df
 ##2
 #creating a function that returns only parts of the sequences that backtrack
 gen_back_seq <- function(n) {
