@@ -13,9 +13,9 @@ library(tibble)
 top10longest <- collatz_df %>%
                 arrange(desc(length), .by_group = TRUE) %>%
                 slice(1:10, .by =  NULL) %>%
-                select(start)
+                select(start) 
 
-# inspired from: 
+# cited from: 
 # https://statisticsglobe.com/select-top-n-highest-values-by-group-in-r
 
 #2.  Find out which starting integer produces a sequence that reaches the
@@ -42,7 +42,7 @@ even_odd_sd_len <- collatz_df %>%
   t.test(even_odd_avg_len$avg, var.eq = FALSE)
 
 # Therefore, p-value is given to be 0.04711. Assume the confidence interval is 
-# given as 95%, since p-value is less than 0.05 hen there is no significant 
+# given as 95%, since p-value is less than 0.05 hence there is no significant 
 # difference between even and odd.
 
 
