@@ -50,5 +50,13 @@ ggplot(data = backtracks_df,
   geom_point(data = top_10_highest,
              aes(x = start,
                  y = max_val,
-                 col = max_val))
+                 col = max_val)
+             ) +
+  labs(
+    title = "Collatz Conjecture",
+    subtitle = paste(
+      "Starting integer and Highest Sequence Value"),
+    x = "Starting integer",
+    y = "Highest Sequence Value"
+  ) 
 
