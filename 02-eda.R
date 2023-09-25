@@ -25,7 +25,8 @@ top10longest <- collatz_df %>%
 max_val_int <- collatz_df %>%
                arrange(desc(max_val), .by_group = TRUE) %>%
                slice(1:1, .by = NULL, .preserve = FALSE) %>%
-               select(start)
+               select(start) %>%
+               unlist()
 
 #3.  What is the average length and standard deviation of the sequence
 #for even starting integers compared to odd ones?
