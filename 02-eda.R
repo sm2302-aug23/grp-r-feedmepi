@@ -13,7 +13,8 @@ library(tibble)
 top10longest <- collatz_df %>%
                 arrange(desc(length), .by_group = TRUE) %>%
                 slice(1:10, .by =  NULL) %>%
-                select(start) 
+                select(start) %>%
+                unlist()
 
 # cited from: 
 # https://statisticsglobe.com/select-top-n-highest-values-by-group-in-r
