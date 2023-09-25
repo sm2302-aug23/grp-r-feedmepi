@@ -42,15 +42,16 @@ highest
 
 top_10_highest <- backtracks_df %>% 
   arrange(desc(max_val)) %>%
-  mutate(top10 = case_when(max_val >= highest$max_val[10] ~ 'top10',
-                           max_val < highest$max_val[10] ~ 'nottop10'))
+  mutate(top10 = case_when(max_val >= highest$max_val[10] ~ 'Top10',
+                           max_val < highest$max_val[10] ~ 'Not_Top10'))
 
 
 ggplot(data = top_10_highest,
        mapping = aes(x = start,
                      y = max_val)
        ) +
-  geom_point(aes(col = top10)
+  geom_point(aes(colour = top10),
+             alpha = 0.8
              ) +
   scale_x_continuous(
     breaks = seq(0, 10000, by = 1000)
@@ -58,13 +59,16 @@ ggplot(data = top_10_highest,
   scale_y_continuous(
     breaks = seq(0, 2.8e+07, by = 0.15e+07)
   ) +
+  scale_colour_manual(values = c("blue", "red")) +
   labs(
-    title = "Collatz Conjecture",
+    title = "Backtracking within Collatz Sequences",
     subtitle = paste(
-      "Starting integer and Highest Sequence Value"),
-    x = "Starting integer",
-    y = "Highest Sequence Value"
-  ) 
+      "Highest Value Reached in the Sequence against Starting Integer"),
+    x = "Starting Integer",
+    y = "Highest Sequence Value",
+    colour = "Top 10 Highest Values"
+  ) +
+  theme_minimal()
 
 
 # plot 3------------------------------------------------------------------------
