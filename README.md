@@ -115,6 +115,82 @@ collatz_df
 
 ### 2) Exploratory data analysis
 
+##### 1. The top 10 starting integers that produce the longest sequences
+
+Saved as `top10longest`
+
+``` r
+top10longest <- collatz_df %>%
+                arrange(desc(length), .by_group = TRUE) %>%
+                slice(1:10, .by =  NULL) %>%
+                select(start) %>%
+                unlist()
+```
+
+``` r
+top10longest
+```
+
+    ##  start1  start2  start3  start4  start5  start6  start7  start8  start9 start10 
+    ##    6171    9257    6943    7963    8959    6591    9887    9897    7422    7423
+
+##### 2. The starting integer which produces a sequence that reaches the highest maximum value
+
+Saved as `max_val_int`
+
+``` r
+max_val_int <- collatz_df %>%
+               arrange(desc(max_val), .by_group = TRUE) %>%
+               slice(1:1, .by = NULL, .preserve = FALSE) %>%
+               select(start) %>%
+               unlist()
+```
+
+``` r
+max_val_int
+```
+
+    ## start 
+    ##  9663
+
+##### 3. The average length and standard deviation of the sequence for even starting integers compared to odd ones
+
+The average length of the sequences for even and odd starting integers,
+saved as `even_odd_avg_len`
+
+``` r
+even_odd_avg <- collatz_df %>%
+                       group_by(parity) %>% 
+                       summarise(avg = mean(length)) %>%
+                       select(avg)
+  
+even_odd_avg_len <- even_odd_avg$avg 
+```
+
+``` r
+even_odd_avg_len
+```
+
+    ## [1] 79.5936 92.3396
+
+The standard deviation of the length of the sequences for even and odd
+starting integers, saved as `even_odd_sd_len`
+
+``` r
+even_odd_sd <- collatz_df %>%
+                    group_by(parity) %>%
+                    summarise(sd = sd(length)) %>%
+                    select(sd)
+
+even_odd_sd_len <- even_odd_sd$sd
+```
+
+``` r
+even_odd_sd_len
+```
+
+    ## [1] 45.10308 47.18387
+
 ## Including Plots
 
 You can also embed plots, for example:
