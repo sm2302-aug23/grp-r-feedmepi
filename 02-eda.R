@@ -51,8 +51,8 @@ even_odd_sd_len <- even_odd_sd$sd
 t.test(even_odd_avg_len, var.eq = FALSE)
 
 # Therefore, p-value is given to be 0.04711. Assume the confidence interval is 
-# given as 95%, since p-value is less than 0.05 hence there is no significant 
-# difference between even and odd.
+# given as 95%, since p-value is less than 0.05 hence there is a significant 
+# difference  at the 5% level that the mean of even and odd is not equal.
 
 
 
