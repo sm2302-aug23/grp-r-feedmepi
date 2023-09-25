@@ -34,14 +34,16 @@ max_val_int <- collatz_df %>%
 
 even_odd_avg_len <- collatz_df %>%
                     group_by(parity) %>%
-                    summarise(avg = mean(length))
+                    summarise(avg = mean(length)) %>%
+                    select(avg)
 
 even_odd_sd_len <- collatz_df %>%
                     group_by(parity) %>%
-                    summarise(sd = sd(length))
+                    summarise(sd = sd(length)) %>%
+                    select(sd)
 
 # Using t-test to find out the p-value
-  t.test(even_odd_avg_len$avg, var.eq = FALSE)
+  t.test(even_odd_avg_len, var.eq = FALSE)
 
 # Therefore, p-value is given to be 0.04711. Assume the confidence interval is 
 # given as 95%, since p-value is less than 0.05 hence there is no significant 
