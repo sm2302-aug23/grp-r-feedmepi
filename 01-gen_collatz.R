@@ -53,15 +53,6 @@ collatz_df <- tibble(
 # https://stackoverflow.com/questions/22337394/dplyr-mutate-with-conditional-values
 # https://www.geeksforgeeks.org/apply-lapply-sapply-and-tapply-in-r/
 
-
-
-mutate(.data = collatz_df,
-       length = as.double(sapply(seq, length)),
-       parity = case_when(start %% 2 == 0 ~ 'Even',
-                          start %% 2 != 0 ~ 'Odd'),
-       max_val = sapply(seq, max)
-       )
-
 collatz_df <- mutate(.data = collatz_df,
                      length = as.double(sapply(seq, length)),
                      parity = case_when(start %% 2 == 0 ~ 'Even',
