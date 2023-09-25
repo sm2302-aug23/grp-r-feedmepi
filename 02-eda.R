@@ -1,7 +1,6 @@
 library(tidyverse)
 library(tinytex)
 library(rmarkdown)
-library(palmerpenguins)
 library(dplyr)
 library(tibble)
 
