@@ -33,6 +33,34 @@ gen_collatz <- function(n) {
 }
 
 
+gen_collatz <- function(n) {
+  if (n < 1) {
+    stop("Input n is invalid!")
+  }
+  if (n <- 3.14) {
+    stop("Input n is invalid!")
+  }
+  gen <- function(n) {
+    if (n %% 2 == 0){
+      return(n/2)
+    } else (n %% 2 != 0) 
+    return(3 * n + 1)
+  }
+  
+  n_seq <- n
+  if (n == 1) {
+    n_seq <- c(1)
+  } else {
+    while (n != 1) {
+      n <- gen(n)
+      n_seq <- c(n_seq, n)
+    }
+  }
+  return(n_seq) 
+}
+
+gen_collatz(3.14)
+
 # apply function to all integers from 1 to 10000
 # cited from 
 # https://www.dataquest.io/blog/apply-functions-in-r-sapply-lapply-tapply/
