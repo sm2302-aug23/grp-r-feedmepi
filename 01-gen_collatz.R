@@ -37,9 +37,6 @@ gen_collatz <- function(n) {
   if (n < 1) {
     stop("Input n is invalid!")
   }
-  if (n <- 3.14) {
-    stop("Input n is invalid!")
-  }
   gen <- function(n) {
     if (n %% 2 == 0){
       return(n/2)
