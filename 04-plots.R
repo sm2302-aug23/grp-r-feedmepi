@@ -38,19 +38,19 @@ ggplot(data = backtracks_df,
 highest <- unique(backtracks_df[c("max_val")]) %>%
   arrange(desc(max_val))
 
+highest
+
 top_10_highest <- backtracks_df %>% 
   arrange(desc(max_val)) %>%
-  filter(max_val >= highest$max_val[10])
-  
+  mutate(top10 = case_when(max_val >= highest$max_val[10] ~ 'top10',
+                           max_val < highest$max_val[10] ~ 'nottop10'))
 
-ggplot(data = backtracks_df,
+
+ggplot(data = top_10_highest,
        mapping = aes(x = start,
                      y = max_val)
        ) +
-  geom_point(data = top_10_highest,
-             aes(x = start,
-                 y = max_val,
-                 col = max_val)
+  geom_point(aes(col = top10)
              ) +
   labs(
     title = "Collatz Conjecture",
@@ -59,6 +59,7 @@ ggplot(data = backtracks_df,
     x = "Starting integer",
     y = "Highest Sequence Value"
   ) 
+
 
 # plot 3------------------------------------------------------------------------
 # boxplot comparing the distributions of sequence lengths for even and odd 
