@@ -48,9 +48,9 @@ integer:
 
 `if (n != as.integer(n) | n < 1) {     stop("Input n is invalid!")   }`
 
-Applying all integers from 1 to 10,000. Then creating a tibble named
-`collatz_df`, which contains the starting integer (`start`) and the
-Collatz sequence (`seq`)
+Applying all integers from 1 to 10,000 to the function. Then creating a
+tibble named `collatz_df`, which contains the starting integer (`start`)
+and the Collatz sequence (`seq`)
 
 ``` r
 n <- c(1:10000)
@@ -60,9 +60,7 @@ collatz_df <- tibble(
   start = n,
   seq = result_n
 )
-```
 
-``` r
 collatz_df
 ```
 
@@ -92,9 +90,7 @@ collatz_df <- mutate(.data = collatz_df,
                                         start %% 2 != 0 ~ 'Odd'),
                      max_val = sapply(seq, max)
 )
-```
 
-``` r
 collatz_df
 ```
 
@@ -125,9 +121,7 @@ top10longest <- collatz_df %>%
                 slice(1:10, .by =  NULL) %>%
                 select(start) %>%
                 unlist()
-```
 
-``` r
 top10longest
 ```
 
@@ -144,9 +138,7 @@ max_val_int <- collatz_df %>%
                slice(1:1, .by = NULL, .preserve = FALSE) %>%
                select(start) %>%
                unlist()
-```
 
-``` r
 max_val_int
 ```
 
@@ -165,9 +157,7 @@ even_odd_avg <- collatz_df %>%
                        select(avg)
   
 even_odd_avg_len <- even_odd_avg$avg 
-```
 
-``` r
 even_odd_avg_len
 ```
 
@@ -183,13 +173,86 @@ even_odd_sd <- collatz_df %>%
                     select(sd)
 
 even_odd_sd_len <- even_odd_sd$sd
-```
 
-``` r
 even_odd_sd_len
 ```
 
     ## [1] 45.10308 47.18387
+
+### 3) Investigating “backtracking” in sequences
+
+Backtracking is when a sequence reaches a value that is less than the
+starting integer, but then increases again above the starting integer at
+least once before reaching 1.
+
+##### 1. Retain starting integers that exhibit backtracking in their sequences
+
+Modifying the function from **Task 1**. By modifying the function name
+to `gen_back` and adding a for loop with the conditions for
+backtracking. The function returns sequences that backtrack, and returns
+“NULL” for the sequences that do not backtrack.
+
+``` r
+gen_back <- function(n) {
+          ...
+          ...
+          ...
+    while (n != 1) {
+      n <- gen(n)
+      n_seq <- c(n_seq, n)
+    }
+  }
+  n_seq3 <- c()
+  for (i in 2:length(n_seq)) {
+    if (isTRUE(n_seq[1] > n_seq[i] & n_seq[1] < n_seq[i+1]) == TRUE){
+      return(n_seq)
+    }
+  } 
+}
+```
+
+Creating a tibble called `back_df` after applying integers from 1 to
+10,000 to the function.
+
+``` r
+n <- c(1:10000)
+result_back <- lapply(n, gen_back)
+
+back_df <- tibble(
+  start = n,
+  seq = result_back
+)
+```
+
+Obtaining `backtracks_df` by filtering and adding columns `length`,
+`parity` and `max_val`
+
+``` r
+backtracks_df <- back_df %>%
+  filter(seq != "NULL") %>%
+  mutate(length = as.double(sapply(seq, length)),
+         parity = case_when(start %% 2 == 0 ~ 'Even',
+                            start %% 2 != 0 ~ 'Odd'),
+         max_val = sapply(seq, max)
+  )
+
+backtracks_df
+```
+
+    ## # A tibble: 8,229 × 5
+    ##    start seq        length parity max_val
+    ##    <int> <list>      <dbl> <chr>    <dbl>
+    ##  1     6 <dbl [9]>       9 Even        16
+    ##  2     7 <dbl [17]>     17 Odd         52
+    ##  3     9 <dbl [20]>     20 Odd         52
+    ##  4    10 <dbl [7]>       7 Even        16
+    ##  5    11 <dbl [15]>     15 Odd         52
+    ##  6    12 <dbl [10]>     10 Even        16
+    ##  7    13 <dbl [10]>     10 Odd         40
+    ##  8    14 <dbl [18]>     18 Even        52
+    ##  9    15 <dbl [18]>     18 Odd        160
+    ## 10    17 <dbl [13]>     13 Odd         52
+    ## # ℹ 8,219 more rows
 
 ## Including Plots
 
