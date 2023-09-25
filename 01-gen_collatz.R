@@ -7,26 +7,7 @@ library(palmerpenguins)
 library(dplyr)
 library(tibble)
 
-# collatz sequence 
-
-gen_collatz <- function(n) {
-  gen <- function(n) {
-    if (n %% 2 == 0){
-      return(n/2)
-    } else (n %% 2 != 0) 
-    return(3 * n + 1)
-  }
-  
-  n_seq <- n
-  while (n != 1) {
-    n <- gen(n)
-    n_seq <- c(n_seq, n)
-  }
-  return(n_seq) 
-}
-
-
-# add safeguard
+# collatz sequence with safeguard
 
 gen_collatz <- function(n) {
   if (n < 1) {
