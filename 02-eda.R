@@ -38,16 +38,11 @@ even_odd_avg_len <- collatz_df %>%
                        select(avg) %>%
                        unlist()
 
-
-even_odd_avg_len <- even_odd_avg_len[2] / even_odd_avg_len[1]
-
 even_odd_sd_len <- collatz_df %>%
                     group_by(parity) %>%
                     summarise(sd = sd(length)) %>%
                     select(sd) %>%
                     unlist()
-
-even_odd_sd_len <- even_odd_sd_len[2] /even_odd_sd_len[1]
 
 # Using t-test to find out the p-value
   t.test(even_odd_avg_len, var.eq = FALSE)
