@@ -52,6 +52,12 @@ ggplot(data = top_10_highest,
        ) +
   geom_point(aes(col = top10)
              ) +
+  scale_x_continuous(
+    breaks = seq(0, 10000, by = 1000)
+  ) +
+  scale_y_continuous(
+    breaks = seq(0, 2.8e+07, by = 0.15e+07)
+  ) +
   labs(
     title = "Collatz Conjecture",
     subtitle = paste(
