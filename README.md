@@ -1,11 +1,15 @@
-Untitled
+FeedMePi Group Assignment
 ================
 
-## GitHub Documents
+## Contributions
 
-This is an R Markdown format used for publishing markdown documents to
-GitHub. When you click the **Knit** button all R code chunks are run and
-a markdown file (.md) suitable for publishing to GitHub is generated.
+- Task 1: @Sia Yee Zee, @AqilMN
+- Task 2: @izzati-aziz
+- Task 3: @AqilMN
+- Task 4: @Sia Yee Zee, @AqilMN, @izzati-aziz
+- Task 5: @izzati-aziz
+- Task 6: @Sia Yee Zee
+- README: @AqilMN
 
 ## Including Code
 
