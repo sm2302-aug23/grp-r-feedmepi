@@ -10,7 +10,7 @@ library(tibble)
 # collatz sequence with safeguard
 
 gen_collatz <- function(n) {
-  if (n < 1) {
+  if (n != as.integer(n) | n < 1) {
     stop("Input n is invalid!")
   }
   gen <- function(n) {
@@ -31,7 +31,6 @@ gen_collatz <- function(n) {
   }
   return(n_seq) 
 }
-
 
 # apply function to all integers from 1 to 10000
 # cited from 
