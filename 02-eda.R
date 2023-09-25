@@ -34,11 +34,13 @@ max_val_int <- collatz_df %>%
 
 even_odd_avg_len <- collatz_df %>%
                     group_by(parity) %>%
-                    summarise(avg = mean(length))
+                    summarise(avg = mean(length)) %>%
+                    unlist()
 
 even_odd_sd_len <- collatz_df %>%
                     group_by(parity) %>%
-                    summarise(sd = sd(length))
+                    summarise(sd = sd(length)) %>%
+                    unlist()
 
 # Using t-test to find out the p-value
   t.test(even_odd_avg_len$avg, var.eq = FALSE)
