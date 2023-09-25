@@ -1,7 +1,7 @@
 library(tidyverse)
 
 ##1
-#creating a function that returns only the start and seq where backtrack occurs
+#creating a function that returns only seq where backtrack occurs
 #error fixing cited from
 #https://stackoverflow.com/questions/7355187/error-in-if-while-condition-missing-value-where-true-false-needed
 
@@ -42,7 +42,7 @@ back_df <- tibble(
   seq = result_back
 )
 
-#filtering the collatz_df, obtaining bactracks_df
+#filtering the back_df, obtaining bactracks_df
 
 backtracks_df <- back_df %>%
   filter(seq != "NULL") %>%
@@ -54,7 +54,7 @@ backtracks_df <- back_df %>%
 
 backtracks_df
 ##2
-#creating a function that returns only the sequences that backtrack
+#creating a function that returns only parts of the sequences that backtrack
 gen_back_seq <- function(n) {
   if (n != as.integer(n) | n < 1) {
     stop("Input n is invalid!")
@@ -88,8 +88,8 @@ gen_back_seq <- function(n) {
   return(n_seq3)
 }
 
-#creating the tibble and filtering an unnesting sequence numbers 
-#that are higher than start
+#creating the tibble and removing "NULL" then unnesting and filtering sequence 
+#numbers that are higher than start
 
 result_back_seq <- lapply(n, gen_back_seq)
 
@@ -168,18 +168,9 @@ max_after_backtrack <- unlist(back_max$max_after_back)
 max_after_backtrack
 
 ##4
-#identify if starting integer is odd or even by mutate
-#inspired from
-#https://stackoverflow.com/questions/22337394/dplyr-mutate-with-conditional-values
-
-oven <- back_df %>%
-  filter(seq != "NULL") %>%
-  mutate(evenodd = case_when(start %% 2 == 0 ~ 'even',
-                             start %% 2 != 0 ~ 'odd'))
-
 #creating a frequency table
 
-even_odd <- as.data.frame(table(oven$evenodd))$Freq
+even_odd <- as.data.frame(table(backtracks_df$parity))$Freq
 
 even_odd_backtrack <- as.vector(even_odd)
 
