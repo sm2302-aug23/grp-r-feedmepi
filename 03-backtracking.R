@@ -6,7 +6,7 @@ library(tidyverse)
 #https://stackoverflow.com/questions/7355187/error-in-if-while-condition-missing-value-where-true-false-needed
 
 gen_back <- function(n) {
-  if (n < 1) {
+  if (n != as.integer(n) | n < 1) {
     stop("Input n is invalid!")
   }
   gen <- function(n) {
@@ -56,7 +56,7 @@ backtracks_df
 ##2
 #creating a function that returns only the sequences that backtrack
 gen_back_seq <- function(n) {
-  if (n < 1) {
+  if (n != as.integer(n) | n < 1) {
     stop("Input n is invalid!")
   }
   gen <- function(n) {
@@ -124,7 +124,7 @@ mode_backtrack
 ##3
 #creating a function that returns maximum value after first backtrack
 gen_back_max <- function(n) {
-  if (n < 1) {
+  if (n != as.integer(n) | n < 1) {
     stop("Input n is invalid!")
   }
   gen <- function(n) {
