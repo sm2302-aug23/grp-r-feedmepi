@@ -187,9 +187,9 @@ least once before reaching 1.
 
 ##### 1. Retain starting integers that exhibit backtracking in their sequences
 
-Modifying the function from **Task 1**. By modifying the function name
-to `gen_back` and adding a for loop with the conditions for
-backtracking. The function returns sequences that backtrack, and returns
+Modifying the function from **Task 1**. By changing the function name to
+`gen_back` and adding a for loop with the conditions for sequences that
+backtrack. The function returns sequences that backtrack, and returns
 “NULL” for the sequences that do not backtrack.
 
 ``` r
@@ -253,6 +253,33 @@ backtracks_df
     ##  9    15 <dbl [18]>     18 Odd        160
     ## 10    17 <dbl [13]>     13 Odd         52
     ## # ℹ 8,219 more rows
+
+##### 2 Most frequently occuring number of times sequences that backtrack go above their starting integer
+
+Modifying the function from **Task 3 Part 1**. By changing the function
+name to `gen_back_seq` and adding a for loop with the conditions
+sequences that backtrack. The function returns parts of sequences that
+experiences backtracking and returns “NULL” for the sequences that do
+not backtrack.
+
+``` r
+gen_back_seq <- function(n) {
+          ...
+          ...
+          ...
+  n_seq3 <- c()
+  for (i in 2:length(n_seq)) {
+    if (isTRUE(n_seq[1] > n_seq[i] & n_seq[1] < n_seq[i+1]) == TRUE){
+      b <- n_seq[i]
+      t <- n_seq[i+1]
+      
+      n_seq2 <- c(b,t)
+      n_seq3 <- c(n_seq3, n_seq2)
+    }
+  } 
+  return(n_seq3)
+}
+```
 
 ## Including Plots
 
