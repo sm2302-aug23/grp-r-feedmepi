@@ -32,20 +32,24 @@ max_val_int <- collatz_df %>%
 #for even starting integers compared to odd ones?
   
 
-even_odd_avg_len <- collatz_df %>%
+even_odd_avg <- collatz_df %>%
                        group_by(parity) %>%
                        summarise(avg = mean(length)) %>%
                        select(avg) %>%
                        unlist()
 
-even_odd_sd_len <- collatz_df %>%
+even_odd_avg_len <- even_odd_avg[2] /even_odd_avg[1]
+
+even_odd_sd <- collatz_df %>%
                     group_by(parity) %>%
                     summarise(sd = sd(length)) %>%
                     select(sd) %>%
                     unlist()
 
+even_odd_sd_len <- even_odd_sd[2] / even_odd_sd[1]
+
 # Using t-test to find out the p-value
-  t.test(even_odd_avg_len, var.eq = FALSE)
+  t.test(even_odd_avg, var.eq = FALSE)
 
 # Therefore, p-value is given to be 0.04711. Assume the confidence interval is 
 # given as 95%, since p-value is less than 0.05 hence there is no significant 
