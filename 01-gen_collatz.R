@@ -59,7 +59,6 @@ gen_collatz <- function(n) {
   return(n_seq) 
 }
 
-gen_collatz(3.14)
 
 # apply function to all integers from 1 to 10000
 # cited from 
