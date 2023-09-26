@@ -1,6 +1,18 @@
 FeedMePi Group Assignment
 ================
 
+## Collatz Conjecture
+
+The Collatz Conjecture is a mathematical conjecture concerning a
+sequence defined as follows. Start with any positive integer `n`.Then
+each term is obtained from the previous term according to these rules:
+
+1.  If the previous term is even, the next term is one half of the
+    previous term.
+2.  If the previous term is odd, the next term is 3 times the previous
+    term plus 1. The conjecture is that no matter what value of `n`, the
+    sequence will always reach 1.
+
 ## Contributions
 
 - Task 1: @Sia Yee Zee, @AqilMN
@@ -111,7 +123,10 @@ collatz_df
 
 ### 2) Exploratory data analysis
 
-##### 1. The top 10 starting integers that produce the longest sequences
+For the following task, `tidyverse` wrangling techniques such as
+arrange, slice, summarise, select etc.
+
+#### 1. The top 10 starting integers that produce the longest sequences
 
 Saved as `top10longest`
 
@@ -128,7 +143,7 @@ top10longest
     ##  start1  start2  start3  start4  start5  start6  start7  start8  start9 start10 
     ##    6171    9257    6943    7963    8959    6591    9887    9897    7422    7423
 
-##### 2. The starting integer which produces a sequence that reaches the highest maximum value
+#### 2. The starting integer which produces a sequence that reaches the highest maximum value
 
 Saved as `max_val_int`
 
@@ -145,7 +160,7 @@ max_val_int
     ## start 
     ##  9663
 
-##### 3. The average length and standard deviation of the sequence for even starting integers compared to odd ones
+#### 3. The average length and standard deviation of the sequence for even starting integers compared to odd ones
 
 The average length of the sequences for even and odd starting integers,
 saved as `even_odd_avg_len`
@@ -185,7 +200,7 @@ Backtracking is when a sequence reaches a value that is less than the
 starting integer, but then increases again above the starting integer at
 least once before reaching 1.
 
-##### 1. Retain starting integers that exhibit backtracking in their sequences
+#### 1. Starting integers that exhibit backtracking in their sequences
 
 Modifying the function from **Task 1**. By changing the function name to
 `gen_back` and adding a for loop with the conditions for sequences that
@@ -246,7 +261,7 @@ backtracks_df
     ## 10    17 <dbl [13]>     13 Odd         52
     ## # ℹ 8,219 more rows
 
-##### 2. Most frequently occuring number of times sequences that backtrack go above their starting integer
+#### 2. Most frequently occuring number of times sequences that backtrack go above their starting integer
 
 Modifying the function from **Task 3 Part 1**. By changing the function
 name to `gen_back_seq` and adding a for loop with the conditions
@@ -322,7 +337,7 @@ mode_backtrack
 
     ## [1] 1
 
-##### 3. Maximum Value After First Backtrack for the sequences
+#### 3. Maximum Value After First Backtrack for the sequences
 
 Creating a function that returns maximum value after first backtrack.
 
@@ -425,7 +440,7 @@ max_after_backtrack
 [ reached getOption("max.print") -- omitted 7725 entries ]
 ```
 
-##### 4. Frequency counts for even and odd backtracking integers
+#### 4. Frequency counts for even and odd backtracking integers
 
 Subset the parity column of `backtracks_df` and making a frequency table
 out of it. Then subset that by `Freq`.
@@ -443,7 +458,7 @@ even_odd_backtrack
 Creating appropriate graphs that visualise the data wrangling tasks in
 **Task 3**.
 
-##### 1. Scatterplot of sequence lenths, with starting integer on the horizontal axis and the length of the sequence on the vertical axis
+#### 1. Scatterplot of sequence lenths, with starting integer on the horizontal axis and the length of the sequence on the vertical axis
 
 Identifying the top 10 starting integers with highest `length`.
 
@@ -475,7 +490,7 @@ ggplot(data = backtracks_df,
 
 ![](README_files/figure-gfm/unnamed-chunk-23-1.png)<!-- -->
 
-##### 2. Scatterplot with starting integer on the horizontal axis and the highest value reached in sequence on the vertical axis
+#### 2. Scatterplot with starting integer on the horizontal axis and the highest value reached in sequence on the vertical axis
 
 Identifying the top 10 starting integers with the highest `max_val`.
 
@@ -520,32 +535,43 @@ ggplot(data = top_10_highest,
 
 ![](README_files/figure-gfm/unnamed-chunk-25-1.png)<!-- -->
 
-##### 3. Boxplot comparing the distributions of sequence lengths for even and odd starting integers.
+#### 3. Boxplot comparing the distributions of sequence lengths for even and odd starting integers.
 
 Plotting boxplot using ggplot2
 
-ggplot(data = backtracks_df , mapping = aes( x = parity, y = length)) +
-
+``` r
+ggplot(data = backtracks_df ,
+       mapping =  aes( x = parity, 
+                       y = length)) +
+  
 geom_boxplot() +
+  
+labs(title = "Distribution of Sequence Lengths when Backtrack occurs",
+     x = "Parity of Starting Integers",
+     y = "Sequence Lengths")
+```
 
-labs(title = “Distribution of Sequence Lengths when Backtrack occurs”, x
-= “Parity of Starting Integers”, y = “Sequence Lengths”)
+![](README_files/figure-gfm/unnamed-chunk-26-1.png)<!-- -->
 
-    Are there any noticeable differences?
+Are there any noticeable differences?
 
-    The most noticeable difference is that Odd starting integers has outliers where Even starting integers does not have outliers. Also, Odd starting integers has a higher average of length compared to Even starting integers.
+The most noticeable difference is that Odd starting integers has
+outliers where Even starting integers does not have outliers. Also, Odd
+starting integers has a higher average of length compared to Even
+starting integers.
 
-    ### 5) Open-ended exploration
-    Does odd numbers produce longer sequences?
+### 5) Open-ended exploration
 
+Does odd numbers produce longer sequences?
 
-    ```r
-    top20longest <- collatz_df %>%
-                    arrange(desc(length), .by_group = TRUE) %>%
-                    slice(1:20, .by =  NULL) %>%
-                    select(start, parity) 
+``` r
+top20longest <- collatz_df %>%
+                arrange(desc(length), .by_group = TRUE) %>%
+                slice(1:20, .by =  NULL) %>%
+                select(start, parity) 
 
-    top20longest
+top20longest
+```
 
     ## # A tibble: 20 × 2
     ##    start parity
@@ -582,7 +608,7 @@ ggplot(data = collatz_df ,
   geom_boxplot()
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-27-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-28-1.png)<!-- -->
 
 With the visualisation of the boxplot, we can see that although both
 boxplot are right skewed, it is evident that Odd numbers have a higher
