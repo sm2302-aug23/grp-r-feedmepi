@@ -159,4 +159,4 @@ max_after_backtrack
 ##4
 #creating a frequency table
 
-even_odd <- as.data.frame(table(backtracks_df$parity))$Freq
+even_odd_backtrack <- as.data.frame(table(backtracks_df$parity))$Freq
