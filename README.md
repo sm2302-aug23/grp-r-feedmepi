@@ -427,8 +427,8 @@ max_after_backtrack
 
 ##### 4. Frequency counts for even and odd backtracking integers
 
-Subsetting the parity column of `backtracks_df` and making a frequency
-table out of it. Then subset that by `Freq`.
+Subset the parity column of `backtracks_df` and making a frequency table
+out of it. Then subset that by `Freq`.
 
 ``` r
 even_odd_backtrack <- as.data.frame(table(backtracks_df$parity))$Freq
@@ -438,11 +438,26 @@ even_odd_backtrack
 
     ## [1] 3943 4286
 
-## Including Plots
+### 4) Visualisations
 
-You can also embed plots, for example:
+Creating appropriate graphs that visualise the data wrangling tasks in
+**Task 3**.
 
-![](README_files/figure-gfm/pressure-1.png)<!-- -->
+##### 1. Scatterplot of sequence lenths, with starting integer on the horizontal axis and the length of the sequence on the vertical axis.
 
-Note that the `echo = FALSE` parameter was added to the code chunk to
-prevent printing of the R code that generated the plot.
+![](README_files/figure-gfm/unnamed-chunk-22-1.png)<!-- -->
+
+##### 2. Scatterplot with starting integer on the horizontal axis and the highest value reached in sequence on the vertical axis
+
+![](README_files/figure-gfm/unnamed-chunk-23-1.png)<!-- -->
+
+##### 3. Boxplot comparing the distributions of sequence lengths for even and odd starting integers.
+
+``` r
+ggplot(data = collatz_df ,
+       mapping =  aes( x = length, 
+                       y = parity)) +
+geom_boxplot()
+```
+
+![](README_files/figure-gfm/unnamed-chunk-24-1.png)<!-- -->
