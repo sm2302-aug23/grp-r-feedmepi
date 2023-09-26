@@ -20,7 +20,7 @@ each term is obtained from the previous term according to these rules:
 - Task 3: @AqilMN
 - Task 4: @Sia Yee Zee, @AqilMN, @izzati-aziz
 - Task 5: @izzati-aziz
-- Task 6: @Sia Yee Zee
+- Task 6: @Sia Yee Zee, @AqilMN
 - README: @AqilMN
 
 ## Tasks
@@ -124,7 +124,7 @@ collatz_df
 ### 2) Exploratory data analysis
 
 For the following task, `tidyverse` wrangling techniques such as
-arrange, slice, summarise, select etc.
+arrange, slice, summarise, select, etc., will be used.
 
 #### 1. The top 10 starting integers that produce the longest sequences
 
@@ -460,13 +460,17 @@ Creating appropriate graphs that visualise the data wrangling tasks in
 
 #### 1. Scatterplot of sequence lenths, with starting integer on the horizontal axis and the length of the sequence on the vertical axis
 
-Identifying the top 10 starting integers with highest `length`.
+Identifying the top 10 starting integers with longest `length`.
 
 ``` r
+top_10_seq_length <- backtracks_df %>%
+  arrange(desc(length)) %>%
+  slice(1:10) %>%
+  group_by(length)
+
 top_10_startint <- backtracks_df %>%
   arrange(desc(length)) %>%
-  group_by(length) %>%
-  slice(1:10)
+  group_by(length)
 ```
 
 Plotting scatterplot using `ggplot2`.
@@ -616,3 +620,40 @@ average length than Even numbers. Also, Odd numbers have a few outlier
 unlike Even numbers, where Even numbers has no outlier.
 
 ### 6) Creative visualisation challenge
+
+How often specific numbers (other than 1) appear in sequences, across
+all starting integers?
+
+Identifying the 10 numbers which are most frequent.
+
+``` r
+seq_freq <- collatz_df %>%
+  filter(seq != "NULL") %>%
+  filter(start != 1) %>%
+  select(start, seq) %>%
+  unnest(seq)
+
+seq_freq2 <- as.data.frame(table(seq_freq$seq)) %>%
+  filter(Var1 != 1) %>%
+  arrange(desc(Freq), .by_group = TRUE) %>%
+  slice(1:10)
+```
+
+Creating bargraph of top 10 numbers that are the most frequent.
+
+``` r
+ggplot(data = seq_freq2,
+       aes(Var1,
+           Freq,
+           fill = Var1)
+) + geom_bar(stat = "identity")+
+  labs(
+    x = "Starting Integer",
+    y = "Frequency",
+  )
+```
+
+![](README_files/figure-gfm/unnamed-chunk-30-1.png)<!-- -->
+
+Numbers 2, 4, 8, 16 have been found in most of the sequences, across all
+starting integers.
