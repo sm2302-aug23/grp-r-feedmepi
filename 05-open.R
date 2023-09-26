@@ -33,4 +33,6 @@ top20longest <- collatz_df %>%
 
 # When arranged based on the length of the sequence, it is shown that 17 out of  
 # 20 of the longest sequence has odd number as the starting integer.
+# Referring to the boxplot in question 4.3), it is also evident that Odd numbers
+# produces longer sequence length. 
 
