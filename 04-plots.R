@@ -8,11 +8,14 @@ library(ggplot2)
 # cited from
 # https://statisticsglobe.com/select-top-n-highest-values-by-group-in-r
 
+top_10_seq_length <- backtracks_df %>%
+  arrange(desc(length)) %>%
+  slice(1:10) %>%
+  group_by(length)
+
 top_10_startint <- backtracks_df %>%
   arrange(desc(length)) %>%
-  group_by(length) %>%
-  slice(1:10)
-
+  group_by(length)
 
 # ggplot 1
 ggplot(data = backtracks_df,
