@@ -33,26 +33,20 @@ gen_back <- function(n) {
   } 
 }
 
-#creating the tibble
+#creating the tibble, filtering out "NULL" and adding more columns
 n <- c(1:10000)
 result_back <- lapply(n, gen_back)
 
-back_df <- tibble(
+backtracks_df <- tibble(
   start = n,
   seq = result_back
-)
-
-#filtering the back_df, obtaining bactracks_df
-
-backtracks_df <- back_df %>%
+) %>%
   filter(seq != "NULL") %>%
   mutate(length = as.double(sapply(seq, length)),
          parity = case_when(start %% 2 == 0 ~ 'Even',
                             start %% 2 != 0 ~ 'Odd'),
-         max_val = sapply(seq, max)
-  )
+         max_val = sapply(seq, max))
 
-backtracks_df
 ##2
 #creating a function that returns only parts of the sequences that backtrack
 gen_back_seq <- function(n) {
@@ -96,9 +90,7 @@ result_back_seq <- lapply(n, gen_back_seq)
 back_seq_df <- tibble(
   start = n,
   seq = result_back_seq
-)
-
-above <- back_seq_df %>%
+) %>%
   filter(seq != "NULL") %>%
   unnest(seq) %>%
   filter(seq > start)
@@ -106,7 +98,7 @@ above <- back_seq_df %>%
 #obtaining the frequency of the sequences going above starting integer
 #cited from https://sparkbyexamples.com/r-programming/r-count-frequency-of-all-unique-values-in-vector/#:~:text=There%20are%20multiple%20ways%20to,package%2C%20or%20aggregate()%20function.
 
-start_freq <- as.data.frame(table(above$start))
+start_freq <- as.data.frame(table(back_seq_df$start))
 
 #creating mode function and finding mode of the frequency
 #cited from https://statisticsglobe.com/mode-in-r-programming-example
@@ -146,7 +138,7 @@ gen_back_max <- function(n) {
   n_seq3 <- c()
   for (i in 2:length(n_seq)) {
     if (isTRUE(n_seq[1] > n_seq[i] & n_seq[1] < n_seq[i+1]) == TRUE){
-      return(n_seq[-(0:i+1)])
+      return(max(n_seq[-(0:i+1)]))
     }
   } 
 }
@@ -156,14 +148,11 @@ result_back_max <- lapply(n, gen_back_max)
 
 back_max_df <- tibble(
   start = n,
-  seq = result_back_max
-)
+  max = result_back_max
+) %>% 
+  filter(max != "NULL")
 
-back_max <- back_max_df %>% 
-  filter(seq != "NULL") %>%
-  mutate(max_after_back = sapply(seq, max))
-
-max_after_backtrack <- unlist(back_max$max_after_back)
+max_after_backtrack <- unlist(back_max_df$max)
 
 max_after_backtrack
 
