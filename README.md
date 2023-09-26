@@ -443,9 +443,9 @@ even_odd_backtrack
 Creating appropriate graphs that visualise the data wrangling tasks in
 **Task 3**.
 
-##### 1. Scatterplot of sequence lenths, with starting integer on the horizontal axis and the length of the sequence on the vertical axis.
+##### 1. Scatterplot of sequence lenths, with starting integer on the horizontal axis and the length of the sequence on the vertical axis
 
-Identifying the top 10 starting integers with highest length
+Identifying the top 10 starting integers with highest `length`.
 
 ``` r
 top_10_startint <- backtracks_df %>%
@@ -453,6 +453,8 @@ top_10_startint <- backtracks_df %>%
   group_by(length) %>%
   slice(1:10)
 ```
+
+Plotting scatterplot using `ggplot2`.
 
 ``` r
 ggplot(data = backtracks_df,
@@ -475,31 +477,75 @@ ggplot(data = backtracks_df,
 
 ##### 2. Scatterplot with starting integer on the horizontal axis and the highest value reached in sequence on the vertical axis
 
-![](README_files/figure-gfm/unnamed-chunk-24-1.png)<!-- -->
-
-##### 3. Boxplot comparing the distributions of sequence lengths for even and odd starting integers.
+Identifying the top 10 starting integers with the highest `max_val`.
 
 ``` r
-ggplot(data = collatz_df ,
-       mapping =  aes( x = length, 
-                       y = parity)) +
-geom_boxplot()
+highest <- unique(backtracks_df[c("max_val")]) %>%
+  arrange(desc(max_val))
+
+top_10_highest <- backtracks_df %>% 
+  arrange(desc(max_val)) %>%
+  mutate(top10 = case_when(max_val >= highest$max_val[10] ~ 'Top10',
+                           max_val < highest$max_val[10] ~ 'Not_Top10'))
+```
+
+Plotting scatterplot using ggplot2. The top 10 starting integers with
+the highest `max_val` are coloured red while the others are blue.
+
+``` r
+ggplot(data = top_10_highest,
+       mapping = aes(x = start,
+                     y = max_val)
+       ) +
+  geom_point(aes(colour = top10),
+             alpha = 0.8
+             ) +
+  scale_x_continuous(
+    breaks = seq(0, 10000, by = 1000)
+  ) +
+  scale_y_continuous(
+    breaks = seq(0, 2.8e+07, by = 0.15e+07)
+  ) +
+  scale_colour_manual(values = c("blue", "red")) +
+  labs(
+    title = "Backtracking within Collatz Sequences",
+    subtitle = paste(
+      "Highest Value Reached in the Sequence against Starting Integer"),
+    x = "Starting Integer",
+    y = "Highest Sequence Value",
+    colour = "Top 10 Highest Values"
+  ) +
+  theme_minimal()
 ```
 
 ![](README_files/figure-gfm/unnamed-chunk-25-1.png)<!-- -->
 
-### 5) Open-ended exploration
+##### 3. Boxplot comparing the distributions of sequence lengths for even and odd starting integers.
 
-Does odd numbers produce longer sequences?
+Plotting boxplot using ggplot2
 
-``` r
-top20longest <- collatz_df %>%
-                arrange(desc(length), .by_group = TRUE) %>%
-                slice(1:20, .by =  NULL) %>%
-                select(start, parity) 
+ggplot(data = backtracks_df , mapping = aes( x = parity, y = length)) +
 
-top20longest
-```
+geom_boxplot() +
+
+labs(title = “Distribution of Sequence Lengths when Backtrack occurs”, x
+= “Parity of Starting Integers”, y = “Sequence Lengths”)
+
+    Are there any noticeable differences?
+
+    The most noticeable difference is that Odd starting integers has outliers where Even starting integers does not have outliers. Also, Odd starting integers has a higher average of length compared to Even starting integers.
+
+    ### 5) Open-ended exploration
+    Does odd numbers produce longer sequences?
+
+
+    ```r
+    top20longest <- collatz_df %>%
+                    arrange(desc(length), .by_group = TRUE) %>%
+                    slice(1:20, .by =  NULL) %>%
+                    select(start, parity) 
+
+    top20longest
 
     ## # A tibble: 20 × 2
     ##    start parity
@@ -528,3 +574,19 @@ top20longest
 When arranged based on the length of the sequence, it is shown that 17
 out of 20 of the longest sequence has odd number as the starting
 integer.
+
+``` r
+ggplot(data = collatz_df ,
+       mapping =  aes( x = length, 
+                       y = parity)) +
+  geom_boxplot()
+```
+
+![](README_files/figure-gfm/unnamed-chunk-27-1.png)<!-- -->
+
+With the visualisation of the boxplot, we can see that although both
+boxplot are right skewed, it is evident that Odd numbers have a higher
+average length than Even numbers. Also, Odd numbers have a few outlier
+unlike Even numbers, where Even numbers has no outlier.
+
+### 6) Creative visualisation challenge
