@@ -445,11 +445,37 @@ Creating appropriate graphs that visualise the data wrangling tasks in
 
 ##### 1. Scatterplot of sequence lenths, with starting integer on the horizontal axis and the length of the sequence on the vertical axis.
 
-![](README_files/figure-gfm/unnamed-chunk-22-1.png)<!-- -->
+Identifying the top 10 starting integers with highest length
+
+``` r
+top_10_startint <- backtracks_df %>%
+  arrange(desc(length)) %>%
+  group_by(length) %>%
+  slice(1:10)
+```
+
+``` r
+ggplot(data = backtracks_df,
+       mapping = aes(x = start,
+                     y = length )) +
+  geom_point(data = top_10_startint, 
+             aes(x = start,
+                 y = length,
+                 col = length)) +
+  labs(
+    title = "Collatz Conjecture",
+    subtitle = paste(
+      "Starting integer and Sequence length"),
+    x = "Starting integer",
+    y = "Sequence length"
+  )
+```
+
+![](README_files/figure-gfm/unnamed-chunk-23-1.png)<!-- -->
 
 ##### 2. Scatterplot with starting integer on the horizontal axis and the highest value reached in sequence on the vertical axis
 
-![](README_files/figure-gfm/unnamed-chunk-23-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-24-1.png)<!-- -->
 
 ##### 3. Boxplot comparing the distributions of sequence lengths for even and odd starting integers.
 
@@ -460,4 +486,45 @@ ggplot(data = collatz_df ,
 geom_boxplot()
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-24-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-25-1.png)<!-- -->
+
+### 5) Open-ended exploration
+
+Does odd numbers produce longer sequences?
+
+``` r
+top20longest <- collatz_df %>%
+                arrange(desc(length), .by_group = TRUE) %>%
+                slice(1:20, .by =  NULL) %>%
+                select(start, parity) 
+
+top20longest
+```
+
+    ## # A tibble: 20 × 2
+    ##    start parity
+    ##    <int> <chr> 
+    ##  1  6171 Odd   
+    ##  2  9257 Odd   
+    ##  3  6943 Odd   
+    ##  4  7963 Odd   
+    ##  5  8959 Odd   
+    ##  6  6591 Odd   
+    ##  7  9887 Odd   
+    ##  8  9897 Odd   
+    ##  9  7422 Even  
+    ## 10  7423 Odd   
+    ## 11  3711 Odd   
+    ## 12  5567 Odd   
+    ## 13  8351 Odd   
+    ## 14  9225 Odd   
+    ## 15  6919 Odd   
+    ## 16  7785 Odd   
+    ## 17  5838 Even  
+    ## 18  5839 Odd   
+    ## 19  2919 Odd   
+    ## 20  8758 Even
+
+When arranged based on the length of the sequence, it is shown that 17
+out of 20 of the longest sequence has odd number as the starting
+integer.
