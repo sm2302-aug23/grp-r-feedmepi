@@ -425,6 +425,19 @@ max_after_backtrack
 [ reached getOption("max.print") -- omitted 7725 entries ]
 ```
 
+##### 4. Frequency counts for even and odd backtracking integers
+
+Subsetting the parity column of `backtracks_df` and making a frequency
+table out of it. Then subset that by `Freq`.
+
+``` r
+even_odd_backtrack <- as.data.frame(table(backtracks_df$parity))$Freq
+
+even_odd_backtrack
+```
+
+    ## [1] 3943 4286
+
 ## Including Plots
 
 You can also embed plots, for example:
