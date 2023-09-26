@@ -33,6 +33,14 @@ top20longest <- collatz_df %>%
 
 # When arranged based on the length of the sequence, it is shown that 17 out of  
 # 20 of the longest sequence has odd number as the starting integer.
-# Referring to the boxplot in question 4.3), it is also evident that Odd numbers
-# produces longer sequence length. 
+
+ggplot(data = collatz_df ,
+       mapping =  aes( x = length, 
+                       y = parity)) +
+  geom_boxplot()
+
+# With the visualisation of the boxplot, we can see that although both
+# boxplot are right skewed, it is evident that Odd numbers have a higher
+# average length than Even numbers. Also, Odd numbers have a few outlier
+# unlike Even numbers, where Even numbers has no outlier.
 
