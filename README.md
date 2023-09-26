@@ -211,30 +211,23 @@ gen_back <- function(n) {
 }
 ```
 
-Creating a tibble called `back_df` after applying integers from 1 to
-10,000 to the function.
+Obtaining `backtracks_df` by creating a tibble using the function,
+filtering out “NULL” and adding the columns `length`, `parity` and
+`max_val`.
 
 ``` r
 n <- c(1:10000)
 result_back <- lapply(n, gen_back)
 
-back_df <- tibble(
+backtracks_df <- tibble(
   start = n,
   seq = result_back
-)
-```
-
-Obtaining `backtracks_df` by filtering and adding columns `length`,
-`parity` and `max_val`
-
-``` r
-backtracks_df <- back_df %>%
+) %>%
   filter(seq != "NULL") %>%
   mutate(length = as.double(sapply(seq, length)),
          parity = case_when(start %% 2 == 0 ~ 'Even',
                             start %% 2 != 0 ~ 'Odd'),
-         max_val = sapply(seq, max)
-  )
+         max_val = sapply(seq, max))
 
 backtracks_df
 ```
@@ -254,7 +247,7 @@ backtracks_df
     ## 10    17 <dbl [13]>     13 Odd         52
     ## # ℹ 8,219 more rows
 
-##### 2 Most frequently occuring number of times sequences that backtrack go above their starting integer
+##### 2. Most frequently occuring number of times sequences that backtrack go above their starting integer
 
 Modifying the function from **Task 3 Part 1**. By changing the function
 name to `gen_back_seq` and adding a for loop with the conditions
@@ -280,6 +273,55 @@ gen_back_seq <- function(n) {
   return(n_seq3)
 }
 ```
+
+Obtaining `back_seq_df` by creating a tibble using the function and
+filtering out “NULL”, then unnesting and filtering sequence numbers that
+are higher than starting integers.
+
+``` r
+result_back_seq <- lapply(n, gen_back_seq)
+
+back_seq_df <- tibble(
+  start = n,
+  seq = result_back_seq
+)
+
+back_seq_df <- tibble(
+  start = n,
+  seq = result_back_seq
+) %>%
+  filter(seq != "NULL") %>%
+  unnest(seq) %>%
+  filter(seq > start)
+```
+
+Creating a frequency table (`start_freq`) of starting integers and the
+number of sequence values that go above starting integer.
+
+``` r
+start_freq <- as.data.frame(table(back_seq_df$start))
+```
+
+Creating a function to find mode. `my_mode`
+
+``` r
+my_mode <- function(x) {                      
+  unique_x <- unique(x)
+  tabulate_x <- tabulate(match(x, unique_x))
+  unique_x[tabulate_x == max(tabulate_x)]
+}
+```
+
+Obtaining `mode_backtrack` by applying `my_mode` function on
+`start_freq`.
+
+``` r
+mode_backtrack <- as.integer(my_mode(start_freq$Freq))
+
+mode_backtrack
+```
+
+    ## [1] 1
 
 ## Including Plots
 

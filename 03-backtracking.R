@@ -25,7 +25,6 @@ gen_back <- function(n) {
       n_seq <- c(n_seq, n)
     }
   }
-  n_seq3 <- c()
   for (i in 2:length(n_seq)) {
     if (isTRUE(n_seq[1] > n_seq[i] & n_seq[1] < n_seq[i+1]) == TRUE){
       return(n_seq)
@@ -46,6 +45,8 @@ backtracks_df <- tibble(
          parity = case_when(start %% 2 == 0 ~ 'Even',
                             start %% 2 != 0 ~ 'Odd'),
          max_val = sapply(seq, max))
+
+backtracks_df
 
 ##2
 #creating a function that returns only parts of the sequences that backtrack
@@ -135,7 +136,6 @@ gen_back_max <- function(n) {
       n_seq <- c(n_seq, n)
     }
   }
-  n_seq3 <- c()
   for (i in 2:length(n_seq)) {
     if (isTRUE(n_seq[1] > n_seq[i] & n_seq[1] < n_seq[i+1]) == TRUE){
       return(max(n_seq[-(0:i+1)]))
