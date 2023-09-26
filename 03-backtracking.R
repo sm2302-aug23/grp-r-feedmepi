@@ -160,7 +160,3 @@ max_after_backtrack
 #creating a frequency table
 
 even_odd <- as.data.frame(table(backtracks_df$parity))$Freq
-
-even_odd_backtrack <- as.vector(even_odd)
-
-even_odd_backtrack
