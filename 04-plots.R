@@ -75,16 +75,21 @@ ggplot(data = top_10_highest,
 # boxplot comparing the distributions of sequence lengths for even and odd 
 # starting integers
 
-ggplot(data = collatz_df ,
-       mapping =  aes( x = length, 
-                       y = parity)) +
-geom_boxplot()
-
+ggplot(data = backtracks_df ,
+       mapping =  aes( x = parity, 
+                       y = length)) +
+  
+geom_boxplot() +
+  
+labs(title = "Distribution of Sequence Lengths when Backtrack occurs",
+     x = "Parity of Starting Integers",
+     y = "Sequence Lengths")
+  
 # Are there any noticeable differences?
 
-# Although both boxplot are right skewed, it is evident that Odd numbers have a
-# higher average length than Even numbers. Also, Odd numbers have a few outlier
-# unlike Even numbers, where Even numbers has no outlier.
+# The most noticeable difference is that Odd starting integers has outliers where
+# Even starting integers does not have outliers. Also, Odd starting integers has
+# a higher average of length compared to Even starting integers.
 
 
 
